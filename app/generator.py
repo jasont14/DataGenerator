@@ -7,6 +7,7 @@ from models.orderdetail import OrderDetail
 from models.orderheader import OrderHeader
 from models.product import Product
 from app.generatorinfo import GeneratorInfo
+from app.writetojson import WriteToJson
 
 import datetime
 import itertools
@@ -41,10 +42,10 @@ class Generator:
                     )        
         #print(json.dumps(customers))
         file_name = datetime.datetime.now().strftime("%Y-%m-%d") + 'customer.json'
-        with open("./data/" + file_name, "w") as file_out:
-            json.dump(customers, file_out)
 
-    
+        #write to file
+        WriteToJson(file_name, customers)
+
     def generator_products(self):
         #write out products
         
@@ -58,9 +59,8 @@ class Generator:
 
         #print(json.dumps(self.products)) # ToDo: need to move this out to external for query for large product sets.
         file_name = datetime.datetime.now().strftime("%Y-%m-%d") + 'products.json'
-        with open("./data/" + file_name, "w") as file_out:
-            json.dump(self.products, file_out)
 
+        WriteToJson(file_name, self.products)        
 
     def generate_order_headers(self):
 
@@ -77,8 +77,9 @@ class Generator:
 
         #print(json.dumps(order_headers))
         file_name = datetime.datetime.now().strftime("%Y-%m-%d") + 'order_headers.json'
-        with open("./data/" + file_name, "w") as file_out:
-            json.dump(order_headers, file_out)
+
+        WriteToJson(file_name,order_headers)  
+  
     
     def get_order_details(self, order_header_id: int, order_detail_id: int) -> OrderDetail:
 
@@ -118,5 +119,6 @@ class Generator:
 
         #print(json.dumps(order_details))
         file_name = datetime.datetime.now().strftime("%Y-%m-%d") + 'order_details.json'
-        with open("./data/" + file_name, "w") as file_out:
-            json.dump(order_details, file_out)
+        WriteToJson(file_name,order_details)
+     
+     
